@@ -261,20 +261,6 @@ set nocp
 
 set noeb vb t_vb=
 
-"hi clear
-"hi comment      guifg=cyan      guibg=#000000
-"hi constant     guifg=#6ea96d   guibg=#000000
-"hi constant     ctermfg=25
-"hi special      guifg=#aaaaaa   guibg=#000000
-"hi String       guifg=red       guibg=#000000   gui=bold
-"hi String       ctermfg=32
-"hi type         guifg=#9ef29c   guibg=#000000   gui=bold
-"hi type         ctermfg=32
-"hi Statement    guifg=blue     guibg=#000000
-"hi PreProc      guifg=blue      guibg=#000000
-
-
-"hi LineNr         ctermfg=120
 hi LineNr         ctermfg=32
 hi TabLine        ctermfg=32 ctermbg=16
 
@@ -282,8 +268,6 @@ hi TabLine        ctermfg=32 ctermbg=16
 let g:SuperTabDefaultCompletionType = "<C-N><C-P>"
 let g:SuperTabDefaultCompletionType = "context"
 
-"let my_terminal = conque_term#open('/bin/bash')
-"let my_terminal = conque_term#open('/bin/bash', ['split', 'resize 10'], 2)
 let g:ConqueTerm_InsertOnEnter = 1
 let g:ConqueTerm_StartMessages = 0
 let g:ConqueTerm_CWInsert = 1
@@ -299,6 +283,7 @@ let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline_powerline_fonts = 1
 
+let vim_markdown_preview_github=1
 set laststatus=2
 
 "set statusline+=%#warningmsg#
