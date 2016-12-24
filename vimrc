@@ -12,25 +12,17 @@ filetype off                   " required!
 
 set rtp+=~/.vim/bundle/vundle/
 
-" vundle {{{1
-"
-" " needed to run vundle (but i want this anyways)
-"
-" " vundle needs filtype plugins off
-" " i turn it on later
  filetype plugin indent off
  syntax off
-"
+
 " " set the runtime path for vundle
  set rtp+=~/.vim/bundle/Vundle.vim
-"
+
 " " start vundle environment
  call vundle#begin()
-"
-" " list of plugins {{{2
-" " let Vundle manage Vundle (this is required)
-" "old: Plugin 'gmarik/Vundle.vim'
+
 Plugin 'VundleVim/Vundle.vim'
+Plugin 'ludwig/split-manpage.vim'
 Plugin 'jamessan/vim-gnupg'
 Plugin 'sudo.vim'
 Plugin 'powerline/powerline'
@@ -56,24 +48,13 @@ Plugin 'ervandew/supertab'
 Plugin 'myint/clang-complete'
 Plugin 'scrooloose/syntastic'
 Plugin 'a.vim'
-"
-" " to install a plugin add it here and run :PluginInstall.
-" " to update the plugins run :PluginInstall! or :PluginUpdate
-" " to delete a plugin remove it here and run :PluginClean
-" " 
-"
-" 
-" Plugin 'bling/vim-airline'
-"
-" " add plugins before this
+
 call vundle#end()
 " vim-plug
 
 
 filetype plugin on
 filetype indent on
-
-
 
 set tabstop=4       " Number of spaces that a <Tab> in the file counts for.
 
@@ -174,9 +155,6 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 	\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 	\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
-""let g:airline_powerline_fonts = 1
-""set guifont=DejaVu\ Sans:120
-
 hi Normal ctermbg=none
 hi LineNr ctermbg=none   ctermfg=110
 
@@ -198,13 +176,9 @@ set tags+=~/.vim/tags/ioctl.tags
 
 set t_Co=256
 
-"set t_AB=^[[48;5;%dm
-"set t_AF=^[[38;5;%dm
-
 " build tags of your own project with Ctrl-F12
 map <C-F12> :!ctags -R -I --sort=yes --languages=C,C++ --c++-kinds=+p --fields=+iaS --extra=+q -f local.tags .<CR>
 map <C-F11> :!ctags -R -I --append=true --sort=yes --c-kinds=+p --fields=+iaS --extra=+q local.tags /usr/include/gtk-3.0/
-"map <C-F10> :!ctags -R -I --append=true --sort=yes --c-kinds=+p --fields=+iaS --extra=+q /usr/include/
 map td :ConqueTermSplit zsh <CR>
 map ts :ConqueTermVSplit zsh <CR>
 map <C-r> :resize +5 <CR>
@@ -219,10 +193,6 @@ nmap <silent> <A-Right> :wincmd l<CR>
 
 nmap <C-m> :TagbarOpenAutoClose<CR>
 
-"map <C-J> <C-W>j<C-W>_
-"map <C-K> <C-W>k<C-W>_
-"map <C-Right> :tabnext<CR>
-"map <C-Left> :tabprev<CR>
 map <C-Right> :bn<CR>
 map <C-Left> :bp<CR>
 
@@ -231,36 +201,10 @@ map <C-a> :%y<CR>
 map bd :bd<CR>
 
 set nocp
-" OmniCppComplete
-"let OmniCpp_NamespaceSearch = 1
-"let OmniCpp_GlobalScopeSearch = 1
-"let OmniCpp_ShowAccess = 1
-"let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
-"let OmniCpp_MayCompleteDot = 1 " autocomplete after .
-"let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
-"let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
-"let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
-" automatically open and close the popup menu / preview window
-"au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
-"set completeopt=menuone,menu,longest,preview
-"set backspace=indent,eol,start
-"au BufNewFile,BufRead,BufEnter *.cpp,*.hpp set omnifunc=omni#cpp#complete#Main
-
-"autocmd FileType python set omnifunc=pythoncomplete#Complete
-"autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-"autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-"autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-"autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-"autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-"autocmd FileType cpp set omnifunc=omni#cpp#complete#Main
-"autocmd FileType c set omnifunc=omni#cpp#complete#Complete#Main
-"au BufNewFile,BufRead,BufEnter *.cpp,*.hpp set omnifunc=omni#cpp#complete#Main
-"autocmd FileType cpp set omnifunc=cppcomplete#CompleteCPP
-
-"colorscheme matrix
 
 set noeb vb t_vb=
 
+"hi LineNr         ctermfg=120
 hi LineNr         ctermfg=32
 hi TabLine        ctermfg=32 ctermbg=16
 
@@ -283,13 +227,20 @@ let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline_powerline_fonts = 1
 
-let vim_markdown_preview_github=1
+let g:instant_markdown_autostart = 0
+"let g:instant_markdown_allow_external_content = 0
+"
+let g:split_manpage_prefix ='K'
+"
+"let vim_markdown_preview_github=1
+"let vim_markdown_preview_toggle=2
+"let vim_markdown_preview_hotkey='<C-m>'
+"let vim_markdown_preview_brower='firefox'
+"let vim_markdown_preview_temp_file=1
+"let vim_markdown_preview_use_xdg_open=1
+
+
 set laststatus=2
-
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
-
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -299,7 +250,6 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
-"colorscheme colorsbox-stbright
 
 " Text editing
 set backspace=indent,eol,start
@@ -317,9 +267,7 @@ set wildmenu
 set wildmode=longest:full,full
 
 " Color scheme
-"set background=dark
 syntax enable
-"colorscheme sunburst
 colorscheme jellybeans
 
 if has('gui_macvim')
