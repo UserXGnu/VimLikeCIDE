@@ -238,7 +238,7 @@ let g:split_manpage_prefix ='K'
 "let vim_markdown_preview_brower='firefox'
 "let vim_markdown_preview_temp_file=1
 "let vim_markdown_preview_use_xdg_open=1
-
+let g:clang_library_path='/usr/lib/libclang.so'
 
 set laststatus=2
 set statusline+=%#warningmsg#
@@ -292,3 +292,5 @@ endfunc
 
 inoremap <BS> <c-r>=Backspace()<CR>
 
+au BufRead,BufNewFile *.asm set filetype=nasm
+au BufRead,BufNewFile *.s set filetype=asm
