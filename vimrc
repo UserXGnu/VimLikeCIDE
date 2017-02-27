@@ -27,8 +27,7 @@ Plugin 'jamessan/vim-gnupg'
 Plugin 'sudo.vim'
 Plugin 'powerline/powerline'
 Plugin 'suan/vim-instant-markdown'
-"Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
+Plugin 'vim-airline/vim-airline'
 "Plugin 'OmniCppComplete'
 Plugin 'AutoComplPop'
 Plugin 'tpope/vim-git'
@@ -37,13 +36,14 @@ Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'tpope/vim-rails'
 Plugin 'majutsushi/tagbar'
 Plugin 'scrooloose/nerdcommenter'
-Plugin 'bling/vim-airline'
+"Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'scrooloose/nerdtree'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'evidens/vim-twig'
 Plugin 'flazz/vim-colorschemes'
-Plugin 'ap/vim-buftabline'
+"Plugin 'ap/vim-buftabline'
 Plugin 'ervandew/supertab'
 Plugin 'myint/clang-complete'
 Plugin 'scrooloose/syntastic'
@@ -226,7 +226,7 @@ let g:airline#extensions#tabline#enabed = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline_powerline_fonts = 1
-
+let g:airline_theme='jellybeans'
 let g:instant_markdown_autostart = 0
 "let g:instant_markdown_allow_external_content = 0
 "
@@ -294,3 +294,8 @@ inoremap <BS> <c-r>=Backspace()<CR>
 
 au BufRead,BufNewFile *.asm set filetype=nasm
 au BufRead,BufNewFile *.s set filetype=asm
+
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+let g:airline_symbols.space = "\ua0"
