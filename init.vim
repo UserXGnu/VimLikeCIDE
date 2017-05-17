@@ -10,16 +10,15 @@ set nocompatible               " be iMproved
 
 filetype off                   " required!
 
-set rtp+=~/.vim/bundle/vundle/
 
- filetype plugin indent off
- syntax off
+filetype plugin indent off
+syntax off
 
 " " set the runtime path for vundle
- set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=~/.config/nvim/bundle/Vundle.vim
 
 " " start vundle environment
- call vundle#begin()
+call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'ludwig/split-manpage.vim'
@@ -43,9 +42,9 @@ Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'evidens/vim-twig'
 Plugin 'flazz/vim-colorschemes'
-if has ('nvim')
- 	Plugin 'ap/vim-buftabline'
-endif 
+"if has ('nvim')
+" 	Plugin 'ap/vim-buftabline'
+"endif 
 Plugin 'ervandew/supertab'
 Plugin 'myint/clang-complete'
 Plugin 'scrooloose/syntastic'
@@ -167,21 +166,8 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 hi Normal ctermbg=none
 hi LineNr ctermbg=none   ctermfg=110
 
-set tags+=~/.vim/tags/gtk.tags
-set tags+=~/.vim/tags/glibobject.tags
-set tags+=~/.vim/tags/gdkpixbuf.tags
-set tags+=~/.vim/tags/stdio.tags
-set tags+=~/.vim/tags/stdlib.tags
-set tags+=~/.vim/tags/string.tags
-set tags+=~/.vim/tags/unistd.tags
-set tags+=~/.vim/tags/inet.tags
-set tags+=~/.vim/tags/in.tags
-set tags+=~/.vim/tags/netdb.tags
-set tags+=~/.vim/tags/socket.tags
-set tags+=~/.vim/tags/select.tags
-set tags+=~/.vim/tags/fcntl.tags
-set tags+=~/.vim/tags/times.tags
-set tags+=~/.vim/tags/ioctl.tags
+set tags+=~/.config/nvim/tags/gtk.tags
+set tags+=~/.config/nvim/tags/glib.tags
 
 set t_Co=256
 
@@ -212,6 +198,8 @@ map <C-a> :%y<CR>
 
 map bd :bd!<CR>
 
+tnoremap <C-.> :startinsert<CR>
+
 set nocp
 
 set noeb vb t_vb=
@@ -232,26 +220,19 @@ let g:ConqueTerm_ReadUnfocused = 1
 let g:ConqueTerm_Color = 1
 let g:ConqueTerm_CloseOnEnd = 1
 
-"let g:instant_markdown_allow_external_content = 0
-"
 let g:split_manpage_prefix ='K'
-"
-"let vim_markdown_preview_github=1
-"let vim_markdown_preview_toggle=2
-"let vim_markdown_preview_hotkey='<C-m>'
-"let vim_markdown_preview_brower='firefox'
-"let vim_markdown_preview_temp_file=1
-"let vim_markdown_preview_use_xdg_open=1
+
+let g:clang_library_path ='/usr/lib/libclang.so'
 let g:clang_close_preview = 1
-let g:clang_library_path='/usr/lib64/'
 let g:clang_use_library=1
+let g:clang_complete_auto=1
 let g:clang_complete_copen=1
 let g:clang_conceal_snippets=1
 let g:clang_snippets=1
-let g:clang_snippets_engine="clang_complete"
+let g:clang_snippets_engine='clang_complete'
 let g:clang_trailing_placeholder=1
 let g:clang_hl_errors=1
-let g:clang_user_options = '-I/usr/lib64/clang/3.1/include/'
+let g:clang_user_options = '-I/usr/lib64/clang/3.9.1/include/'
 let g:clang_complete_macros=1
 let g:clang_complete_patterns=1
 
@@ -260,12 +241,26 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
+
+" general syntastic config
+let g:syntastic_check_on_open = 1
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
-let g:disable_key_mappings = 1
+"let g:syntastic_asm_compiler = 'nasm'
+"let g:syntastic_asm_dialect = 'intel'
+"let g:syntastic_asm_cflags = '-c'
+"let g:gyntastic_asm_compiler_options = '-c'
+
+" c syntastic options
+let g:syntastic_c_compiler = 'gcc'
+let g:syntastic_c_config_file = '.config_c'
+let g:syntastic_c_check_header = 1
+let g:syntastic_c_no_include_search = 0
+let g:syntastic_c_auto_refresh_includes = 1
+let g:syntastic_auto_jump = 1
+"let g:disable_key_mappings = 1
 
 " Text editing
 set backspace=indent,eol,start
@@ -308,6 +303,8 @@ endfunc
 
 inoremap <BS> <c-r>=Backspace()<CR>
 
+
+au BufRead,BufNewFile *.masm set filetype=masm
 au BufRead,BufNewFile *.asm set filetype=nasm
 au BufRead,BufNewFile *.s set filetype=asm
 
@@ -323,7 +320,7 @@ endif
 
 let g:airline_section_b = '%{strftime("%c")}'
 let g:airline_section_y = 'BN: %{bufnr("%")}'
-let g:airline#extensions#tabline#enabed = 1
+let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline_powerline_fonts = 1
