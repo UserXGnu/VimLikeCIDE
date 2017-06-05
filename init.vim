@@ -19,7 +19,6 @@ set rtp+=~/.config/nvim/bundle/Vundle.vim
 
 " " start vundle environment
 call vundle#begin()
-
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'ludwig/split-manpage.vim'
 Plugin 'jamessan/vim-gnupg'
@@ -50,6 +49,8 @@ Plugin 'myint/clang-complete'
 Plugin 'scrooloose/syntastic'
 Plugin 'a.vim'
 Plugin 'gcollura/vim-masm'
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
 
 if has('nvim')
 	Plugin 'vimlab/split-term.vim'
@@ -61,6 +62,16 @@ call vundle#end()
 
 filetype plugin on
 filetype indent on
+
+" general syntastic config
+let g:syntastic_check_on_open = 1
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_wq = 0 
+let g:syntastic_nasm_checker = ['nasm']
+let g:syntastic_nasm_nasm_args = "-felf"
+
+
 
 set tabstop=4       " Number of spaces that a <Tab> in the file counts for.
 
@@ -179,10 +190,10 @@ if has('nvim')
 	map td :15Term zsh <CR>
 	map ts :VTerm zsh <CR>
 endif 
-map <C-r> :resize +5 <CR>
-map <C-e> :resize -5 <CR>
-map <C-v> :vertical resize -5 <CR>
-map <C-f> :vertical resize +5 <CR>
+map <C-r> :resize +1 <CR>
+map <C-e> :resize -1 <CR>
+map <C-v> :vertical resize -1 <CR>
+map <C-f> :vertical resize +1 <CR>
 
 nmap <silent> <A-Up> :wincmd k<CR>
 nmap <silent> <A-Down> :wincmd j<CR>
@@ -242,16 +253,10 @@ set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
 
-" general syntastic config
-let g:syntastic_check_on_open = 1
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_wq = 0
-
 "let g:syntastic_asm_compiler = 'nasm'
 "let g:syntastic_asm_dialect = 'intel'
 "let g:syntastic_asm_cflags = '-c'
-"let g:gyntastic_asm_compiler_options = '-c'
+"let g:gyntastic_asm_compiler_options = '-felf'
 
 " c syntastic options
 let g:syntastic_c_compiler = 'gcc'
@@ -327,3 +332,4 @@ let g:airline_powerline_fonts = 1
 let g:airline_theme='jellybeans'
 let g:instant_markdown_autostart = 0
 
+let g:vim_markdown_folding_disabled = 1
