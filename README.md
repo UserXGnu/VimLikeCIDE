@@ -16,7 +16,7 @@
 	In systems based on debian you would do something like: 
 	``` apt-get install neovim ```
 
- - The second step is to clone this repositorie to your machine. More specifically in ``` ~/.config/nvim/ ```
+ - The second step is to clone this repository to your machine. More specifically in ``` ~/.config/nvim/ ```
 
  - After that you can run the script in that way: ``` sh config.sh ```, or ``` ./config.sh ```
  
