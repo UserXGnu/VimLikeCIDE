@@ -2,7 +2,7 @@
 
 ## Installation:
 
- - You will need to install nvim (neovim). That's a powerful extension of Vim, that can help us with some features!
+ - You will need to install nvim (neovim). That's a powerful fork of Vim, that can help us with some features!
 
 	If you want, it can be installed as an AppImage:
 	```
@@ -18,8 +18,8 @@
 
  - The second step is to clone this repository to your machine. More specifically in ``` ~/.config/nvim/ ```
 
- - After that you can run the script in that way: ``` sh config.sh ```, or ``` ./config.sh ```
+ - After that, you might run the script in that way: ``` sh config.sh ```, or ``` ./config.sh ```
  
- - So, you can run ``` nvim init.vim ```, and after that you press ``` :PluginInstall ```. That command will install all of that plugins!
+ - So, you can run ``` nvim init.vim ```, and after that you type ``` :PluginInstall ```. That command will install all of that plugins!
 
 	
