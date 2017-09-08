@@ -19,7 +19,9 @@ set rtp+=~/.config/nvim/bundle/Vundle.vim
 
 " " start vundle environment
 call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
+Plugin 'VundleVim/Vundle.vim' 
+Plugin 'sirver/ultisnips'
+Plugin 'honza/vim-snippets'
 Plugin 'ludwig/split-manpage.vim'
 Plugin 'jamessan/vim-gnupg'
 Plugin 'sudo.vim'
@@ -63,13 +65,22 @@ call vundle#end()
 filetype plugin on
 filetype indent on
 
+" Ultisnips
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<c-a>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>" 
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+
 " general syntastic config
 let g:syntastic_check_on_open = 1
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_wq = 0 
 let g:syntastic_nasm_checker = ['nasm']
-let g:syntastic_nasm_nasm_args = "-felf"
+let g:syntastic_nasm_nasm_args = "-felf64"
 
 
 
