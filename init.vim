@@ -1,4 +1,4 @@
-" vim-bootstrap 564604c featured to C/CPP, asm by UserX (user_x@riseup.net)
+" vim-bootstrap 564604c
 
 "*****************************************************************************
 "" Vim-PLug core
@@ -444,7 +444,7 @@ let g:UltiSnipsEditSplit="vertical"
 
 " syntastic
 let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+let g:syntastic_check_on_wq = 1
 
 let g:syntastic_c_compiler = 'gcc'
 let g:syntastic_c_config_file = '.config_c'
@@ -521,11 +521,10 @@ nnoremap <Leader>o :.Gbrowse<CR>
 "*****************************************************************************
 
 " c
-au BufRead,BufNewFile *.c set filetype=c
+au BufRead,BufNewFile *.c set filetype=cpp
 au BufRead,BufNewFile *.cpp set filetype=cpp
-au BufRead,BufNewFile *.h set filetype=c
+au BufRead,BufNewFile *.h set filetype=cpp
 au BufRead,BufNewFile *.hpp set filetype=cpp
-autocmd FileType c setlocal tabstop=4 shiftwidth=4 expandtab
 autocmd FileType cpp setlocal tabstop=4 shiftwidth=4 expandtab
 
 
@@ -726,6 +725,9 @@ autocmd FileType c,cpp,objc vnoremap <buffer><Leader>cf :ClangFormat<CR>
 autocmd FileType c,cpp,objc map <buffer><Leader>x <Plug>(operator-clang-format)
 " Toggle auto formatting
 nmap <Leader>C :ClangFormatAutoToggle<CR>
+
+" unwanted whitespace cleanup
+map <buffer><Leader>X :FixWhitespace<CR>
 
 " asm filetypes settings
 au BufRead,BufNewFile *.masm set filetype=masm
