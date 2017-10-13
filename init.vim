@@ -1,4 +1,4 @@
-" vim-bootstrap 564604c
+" vim-bootstrap 564604c featured to C/CPP, asm by UserX (user_x@riseup.net)
 
 "*****************************************************************************
 "" Vim-PLug core
