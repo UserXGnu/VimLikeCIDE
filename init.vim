@@ -31,6 +31,9 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 "*****************************************************************************
 "" Plug install packages
 "*****************************************************************************
+" Plug 'tpope/vim-afterimage'
+Plug 'makerj/vim-pdf'
+Plug 'chrisbra/sudoedit.vim'
 Plug 'kana/vim-operator-user'
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
@@ -48,6 +51,7 @@ Plug 'scrooloose/syntastic'
 Plug 'Yggdroot/indentLine'
 Plug 'avelino/vim-bootstrap-updater'
 Plug 'sheerun/vim-polyglot'
+Plug 'jtratner/vim-flavored-markdown'
 if isdirectory('/usr/local/opt/fzf')
   Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
 else
@@ -58,6 +62,7 @@ let g:make = 'gmake'
 if exists('make')
         let g:make = 'make'
 endif
+
 Plug 'Shougo/vimproc.vim', {'do': g:make}
 
 "" Vim-Session
@@ -89,8 +94,8 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'majutsushi/tagbar'
 Plug 'flazz/vim-colorschemes'
 
-Plug 'ervandew/supertab'
-Plug 'myint/clang-complete'
+" Plug 'myint/clang-complete'
+Plug 'vim-scripts/clang-complete'
 Plug 'vim-scripts/a.vim'
 Plug 'gcollura/vim-masm'
 Plug 'godlygeek/tabular'
@@ -104,7 +109,7 @@ Plug 'ludwig/split-manpage.vim'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'google/vim-colorscheme-primary'
 Plug 'meiraka/vim-google-cpp-style-indent'
-Plug 'rhysd/vim-clang-format'
+" Plug 'rhysd/vim-clang-format'
 
 
 " elm
@@ -150,7 +155,7 @@ Plug 'tpope/vim-projectionist'
 Plug 'thoughtbot/vim-rspec'
 Plug 'ecomba/vim-ruby-refactoring'
 
-
+Plug 'ervandew/supertab'
 "*****************************************************************************
 "*****************************************************************************
 
@@ -251,8 +256,10 @@ endif
 
 
 if has('nvim')
-	map td :15Term zsh <CR>
-	map ts :VTerm zsh <CR>
+""	map td :15Term zsh <CR>
+""	map ts :VTerm zsh <CR>
+  map td :split term://zsh<CR>
+  map ts :vsplit term://zsh<CR>
 endif
 
 "" Disable the blinking cursor.
@@ -349,6 +356,11 @@ endif
 "*****************************************************************************
 "" Autocmd Rules
 "*****************************************************************************
+augroup markdown
+    au!
+    au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
+augroup END
+
 "" The PC is fast enough, do syntax highlight syncing from start unless 200 lines
 augroup vimrc-sync-fromstart
   autocmd!
@@ -358,7 +370,7 @@ augroup END
 "" Remember cursor position
 augroup vimrc-remember-cursor-position
   autocmd!
-  autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+  autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\""  | endif
 augroup END
 
 "" txt
@@ -438,7 +450,7 @@ nnoremap <silent> <leader>e :FZF -m<CR>
 
 " snippets
 let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-a>"
 let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 let g:UltiSnipsEditSplit="vertical"
 
@@ -446,8 +458,13 @@ let g:UltiSnipsEditSplit="vertical"
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 1
 
+let g:syntastic_nasm_checkers = ['nasm']
+let g:syntastic_nasm_compiler = 'nasm'
+let g:syntastic_nasm_pc_lint_args = "-f elf64"
+let g:syntastic_nasm_config_file = '.config_nasm'
+
 let g:syntastic_c_compiler = 'gcc'
-let g:syntastic_c_config_file = '.config_c'
+let g:syntastic_c_config_file = '.clang_complete'
 let g:syntastic_c_check_header = 1
 let g:syntastic_c_no_include_search = 0
 let g:syntastic_c_auto_refresh_includes = 1
@@ -514,18 +531,19 @@ vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 
 "" Open current line on GitHub
-nnoremap <Leader>o :.Gbrowse<CR>
+nnoremap <Leader>o :.Gbrowser<CR>
 
 "*****************************************************************************
 "" Custom configs
 "*****************************************************************************
 
 " c
-au BufRead,BufNewFile *.c set filetype=cpp
+au BufRead,BufNewFile *.c set filetype=c
 au BufRead,BufNewFile *.cpp set filetype=cpp
-au BufRead,BufNewFile *.h set filetype=cpp
+au BufRead,BufNewFile *.h set filetype=c
 au BufRead,BufNewFile *.hpp set filetype=cpp
 autocmd FileType cpp setlocal tabstop=4 shiftwidth=4 expandtab
+autocmd FileType c setlocal tabstop=4 shiftwidth=4 expandtab
 
 
 " elm
@@ -599,7 +617,7 @@ let g:rubycomplete_rails = 1
 augroup vimrc-ruby
   autocmd!
   autocmd BufNewFile,BufRead *.rb,*.rbw,*.gemspec setlocal filetype=ruby
-  autocmd FileType ruby set tabstop=2|set shiftwidth=2|set expandtab softtabstop=2
+  autocmd FileType ruby set tabstop=4|set shiftwidth=4|set expandtab softtabstop=4
 augroup END
 
 let g:tagbar_type_ruby = {
@@ -697,14 +715,18 @@ endif
 
 let g:split_manpage_prefix ='K'
 
-let g:clang_exec = '/usr/bin/clang'
-let g:clang_library_path ='/usr/lib/'
+
+let g:python3_host_prog = '/usr/bin/python'
+let g:python_host_prog = '/usr/bin/python2.7'
+
+let g:clang_exec = "/usr/bin/clang"
+let g:clang_library_path = "/usr/lib64/"
 let g:clang_close_preview = 1
 let g:clang_use_library=1
+let g:clang_snippets=1
 let g:clang_complete_auto=1
 let g:clang_complete_copen=1
 let g:clang_conceal_snippets=1
-let g:clang_snippets=1
 let g:clang_snippets_engine='clang_complete'
 let g:clang_trailing_placeholder=1
 let g:clang_hl_errors=1
@@ -712,11 +734,17 @@ let g:clang_user_options = '.clang_complete'
 let g:clang_complete_macros=1
 let g:clang_complete_patterns=1
 
-" clang-format
-let g:clang_format#detect_style_file = 1
-let g:clang_format#auto_format_on_insert_leave = 1
-let g:clang_format#enable_fallback_style = 0
+set concealcursor=inv
+set conceallevel=2
+set completeopt=menu,menuone
+set pumheight=20
 
+" let g:SuperTabDefaultCompletion='<c-x><c-u><c-p>'
+
+" " clang-format
+" let g:clang_format#detect_style_file = 1
+" let g:clang_format#auto_format_on_insert_leave = 1
+" let g:clang_format#enable_fallback_style = 0
 
 " map to <Leader>cf in C++ code
 autocmd FileType c,cpp,objc nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
@@ -727,7 +755,8 @@ autocmd FileType c,cpp,objc map <buffer><Leader>x <Plug>(operator-clang-format)
 nmap <Leader>C :ClangFormatAutoToggle<CR>
 
 " unwanted whitespace cleanup
-map <buffer><Leader>X :FixWhitespace<CR>
+" map <buffer><Leader>X :FixWhitespace<CR>
+map <Leader>X :FixWhitespace<CR>
 
 " asm filetypes settings
 au BufRead,BufNewFile *.masm set filetype=masm
@@ -738,18 +767,57 @@ if !has('nvim')
 	set ttymouse=xterm2
 endif
 
+set mouse=a
+
 set nowrap
 map bd :bd!<CR>
 
 map <C-Right> :bn<CR>
 map <C-Left> :bp<CR>
 
+map <C-S-Left> :tabprev<CR>
+map <C-S-Right> :tabnext<CR>
+
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 if (has("termguicolors"))
   set termguicolors
 endif
+
 " set background=dark
 " colorscheme spacemacs-theme
+hi Normal guibg=none ctermbg=none
 
+tnoremap <A-Right> <C-\><C-N><C-w>h
+tnoremap <A-j> <C-\><C-N><C-w>j
+tnoremap <A-k> <C-\><C-N><C-w>k
+tnoremap <A-Left> <C-\><C-N><C-w>l
+inoremap <A-right> <C-\><C-N><C-w>h
+inoremap <A-j> <C-\><C-N><C-w>j
+inoremap <A-k> <C-\><C-N><C-w>k
+inoremap <A-left> <C-\><C-N><C-w>l
+nnoremap <A-left> <C-w>h
+nnoremap <A-down> <C-w>j
+nnoremap <A-up> <C-w>k
+nnoremap <A-right> <C-w>l
 
+tnoremap <Esc> <C-\><C-n>
+
+map <leader>i :startinsert<CR>
+
+" NETRW
+map <leader>V :Vex<CR>
+map <leader>S :Sex<CR>
+
+let g:netrw_banner = 0
+let g:netrw_liststyle = 1
+let g:netrw_browse_split = 4
+let g:netrw_altv = 1
+let g:netrw_winsize = 25
+let g:netrw_silent = 1
+
+" redo
+map <leader>r :redo<CR>
+map <leader>a :A<CR>
+
+filetype plugin indent on
